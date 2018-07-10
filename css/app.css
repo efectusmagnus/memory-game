@@ -1,0 +1,393 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: url('../img/geometry2.png'); /* background image */
+	font-family: 'Gaegu', cursive; /* Google's Fonts */
+	font-size: 16px;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+h1 {
+	font-family: 'Gaegu', cursive;
+	font-weight: 600;
+	font-size: 2.3em;
+	text-align: center;
+	padding-top: 2.5rem;
+	color: #9f81c8;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+
+.deck {
+	width: 85%;
+	/*min-height: 680px;*/
+	background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+	/*background: linear-gradient(160deg, lightcoral 0%, #aa7ecd 100%);*/
+	padding: 1rem;
+	border-radius: 1rem;
+	box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	/*justify-content: space-between;*/
+	align-items: center;
+	margin: 0 0 3em;
+}
+/* Style the cards and give color to the icons */
+.deck .card {
+	height: 3.7rem;
+	width: 3.7rem;
+	margin: 0.2rem 0.2rem;
+	background: #2e3d49;
+	font-size: 0; /* hide the icons */
+	color: #ffffff; /* white*/
+	border-radius: 8px; /* smooth the borders */
+	cursor: pointer;
+	display: flex; /*centers the icons */
+	justify-content: center; /*centers the icons */
+	align-items: center;
+	box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5); /*shadow*/
+}
+/* Apply style when the cards are open */
+.deck .card.open {
+	transform: rotateY(0);
+	background: #02b3e4;
+	cursor: default;
+	/* When the card open, make this animation */
+	animation-name: flipInY;
+	-webkit-backface-visibility: visible !important;
+	animation-duration: .75s;
+}
+/* Show icons and center them */
+.deck .card.show {
+	font-size: 1.5em;
+	padding-top: 0.5em;
+}
+
+/* Apply style when the cards match*/
+.deck .card.match {
+	cursor: default;
+	background: #02ccba;
+	font-size: 1.5em; /*33px*/
+	padding-top: 0.5em;
+	/*These are for the animation */
+	animation-name: rubberBand;
+	-webkit-backface-visibility: visible !important;
+	animation-duration: .75s;
+}
+
+/* Styles for the score panel */
+.score-panel {
+	text-align: left;
+	/*width: 345px;*/
+	margin-bottom: 10px;
+}
+
+.score-panel, ul.stars {
+	margin: 0;
+	padding: 0;
+	display: inline-block; /*Displays the stars of the score panel in one line */
+	margin: 0 5px 0 0;
+}
+
+/* Displays the stars in the same line and without dots */
+.score-panel .stars li {
+	list-style: none;
+	display: inline-block;
+}
+
+.score-panel, button.restart {
+	float: right;
+	cursor: pointer;
+	/*padding-top: 0.3em;*/
+	font-size: 1em;
+	font-family: 'Gaegu', cursive; /* Google's Fonts */
+}
+
+/* this is a button for the restart of the game*/
+.restart {
+	border-bottom-style: none;
+	color: black;
+	background-color: transparent;
+	border: transparent;
+}
+
+/*ThiS adds a yellow color to the star(s)*/
+.yellow-star {
+	color: #ffcc00;
+}
+
+/* ThiS adds a black color to the star(s) */
+.black-star {
+	color: black;
+}
+
+/* A timer for my clock :P */
+.timer {
+	display: inline-block;
+	margin: 0 1rem;
+}
+
+/*
+ * Modal window
+ */
+ /* This is an overlay for the modal window*/
+.hide-window {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.7);
+	transition: opacity 500ms;
+	visibility: hidden;
+	opacity: 0;
+}
+
+/* Show the modal window after the game is beended */
+.hide-window:target {
+	visibility: visible;
+	opacity: 1;
+}
+
+/* Window with score */
+.results-container,.message1, .message2 {
+	max-height: 30%;
+	overflow: auto;
+	text-align: center;
+}
+
+.show-modal {
+	visibility: visible !important;
+	opacity: 100 !important;
+}
+
+/* content of the modal window */
+.popup {
+	position: relative;
+	padding-top: 0.1rem;
+	color: #d07373;
+	width: 40%;
+	min-width: 270px;
+	max-width: 455px;
+	height: auto;
+	margin-top: 10vh; /*in this case is `viewport height` better than `%`*/
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: auto;
+	border-radius: 40px;
+	background-color: #faebd7;
+	padding-bottom: 0.1rem;
+	box-shadow: 12px 15px 20px 0 rgb(43, 39, 33);
+	background: url('../img/geometry2.png'); /* background image */
+}
+
+#star-wins li {
+	display: inline-block;
+}
+
+.message1 {
+	text-align: center;
+	font-size: 1.5rem;
+	color: #b8860b; /*darkgoldenrod*/
+	font-weight: 600;
+}
+
+.p-score {
+	font-family: 'Gaegu', cursive; /* Google's Fonts */
+	font-size: 1.5rem;
+}
+i#first-star {
+	display: inline-block;
+}
+
+li {
+	display: inline-block;
+	text-align: right;
+	padding-bottom: 1rem;
+}
+
+/* Close button
+my-button {
+	padding-top: 0.1rem;
+	padding-right: 1rem;
+}
+*/
+/* Beautiful font for my close button of the modal window*/
+.close-icon {
+	font-family: 'Gaegu', cursive;
+}
+.popup .close-icon {
+	position: absolute;
+	padding-top: 0.5rem;
+	padding-left: 1rem;
+	padding-bottom: 0.5rem;
+	padding-right: 1rem;
+	top: -1rem; /* so that the close button stay a little outside the popup */
+	align-items: flex-start;
+	right: -1rem; /* so that the close button stay a little outside the popup */
+	font-weight: bold;
+	border-color: transparent;
+	border-radius: 40px;
+	font-size: 1.5em;
+	background-color: #d3d3d3;
+	box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.close-icon:hover {
+	color: #e5f720;
+}
+/* End of close button*/
+
+/* Play again button for the modal window */
+#play-again {
+	background-color: #24adad;
+	font-size: 1.5rem;
+	display: block;
+	margin: 0 auto;
+	font-family: 'Gaegu', cursive;
+	color: #ffffff; /*white*/
+	border-radius: 40px;
+	border-color: #ffd700; /*gold*/
+	text-align: center;
+	margin-bottom: 2.5rem;
+	padding: 0.5em;
+	box-shadow: 12px 15px 20px 0 rgba(4, 29, 49, 0.5);
+}
+
+/* My h2 title */
+#resultsTitle {
+	font-size: 2em;
+	color: #20b2aa; /*lightseagreen*/
+	text-align: center;
+	margin-top: 3rem;
+}
+
+/*The animations code is partially from `https://www.tutorialspoint.com/css/css_animation_flip_in_y.htm` and from here: `https://memory-game-fend.herokuapp.com/#`*/
+/* animations for the cards */
+@keyframes flipInY {
+	from {
+		transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+		animation-timing-function: ease-in;
+		opacity: 0;
+	}
+
+	40% {
+		transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+		animation-timing-function: ease-in;
+	}
+
+	60% {
+		transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+		opacity: 1;
+	}
+
+	80% {
+		transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+	}
+
+	to {
+		transform: perspective(400px);
+	}
+}
+
+@keyframes rubberBand {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	30% {
+		transform: scale3d(1.25, 0.75, 1);
+	}
+
+	40% {
+		transform: scale3d(0.75, 1.25, 1);
+	}
+
+	50% {
+		transform: scale3d(1.15, 0.85, 1);
+	}
+
+	65% {
+		transform: scale3d(.95, 1.05, 1);
+	}
+
+	75% {
+		transform: scale3d(1.05, .95, 1);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes pulse {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+/* End of animations for the cards */
+
+/* Media Queries */
+/* For old cell phones */
+@media (max-width: 320px) {
+  .deck {
+	width: 85%;
+  }
+  .deck .card {
+	width: 3rem;
+	height: 3rem;
+  }
+}
+/*For tablets and desktop*/
+@media (min-width: 768px) {
+  .container {
+	font-size: 22px;
+  }
+  .deck {
+	width: 660px;
+	height: 680px;
+  }
+  .deck .card {
+	width: 125px;
+	height: 125px;
+  }
+  .popup {
+	width: 60%;
+	margin-top: 25vh;
+  }
+}
