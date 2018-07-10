@@ -12,5 +12,6 @@ For the animations of the cards, these two links were helpful: https://www.tutor
 
 ##Installation requirements
 There are no installations needed, only a well-functioning browser, higher than IE 9. 
+
 ##License
 You can use this code by mentioning the author’s name for non-commercial purposes.
