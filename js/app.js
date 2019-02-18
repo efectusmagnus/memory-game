@@ -18,7 +18,7 @@ function yellowStar() {
 let second = 0;
 let minute = 0;
 let hour = 0;
-let clock = document.querySelector(".timer");
+const clock = document.querySelector(".timer");
 let clockRunning = false;
 let clockID;
 
